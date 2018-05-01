@@ -37,6 +37,7 @@ echo "Restoring..."
 dotnet restore $SLN_FILE -f --no-cache
 
 NUPKG_PATH="$PWD/packages"
+mkdir -p $NUPKG_PATH
 echo $NUPKG_PATH
 
 echo "Building..."
@@ -53,8 +54,7 @@ fi
 
 #TAGS=`echo $PROJECTNAME | tr '.' ' '`
 echo "Packing...."
-dotnet pack $SLN_FILE -o $NUPKG_PATH \ 
-                        --include-symbols \
+dotnet pack $SLN_FILE -o "$NUPKG_PATH" --include-symbols \
                         --no-restore \
                         --no-build \
                         --configuration Release \
