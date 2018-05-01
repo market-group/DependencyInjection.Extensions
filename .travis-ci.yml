@@ -1,0 +1,18 @@
+language: csharp  
+sudo: required  
+dist: trusty  
+sudo: false
+env:  
+  - CLI_VERSION=latest
+dotnet: 2.0.0
+mono:  
+  - latest
+os:  
+  - linux
+branches:  
+  only:
+    - master
+install:  
+  - ./install-mono.sh
+script:  
+  - ./ci-script.sh
