@@ -12,6 +12,9 @@ os:
 branches:  
   only:
     - master
+before-install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y --no-install-recommends unzip git libc6 libc6-dev libc6-dbg
 install: 
   - chmod +x ./install-mono.sh
   - ./install-mono.sh

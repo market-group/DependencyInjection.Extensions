@@ -3,6 +3,7 @@
 SLN_FILE=`find . -name '*.sln'`
 
 echo "checking for sln list"
+
 SLN=$(readlink -f `ls *.sln`)
 DCPROJ=`dotnet sln list | grep dcproj || true`
 if [ ! -z "$DCPROJ" ]; then
@@ -12,7 +13,7 @@ fi
 
 
 echo "Calculating Version...."
-mono /usr/lib/GitVersion/tools/GitVersion.exe /output buildserver
+mono ./GitVersion/tools/GitVersion.exe /output buildserver
 export $(awk -F= '{print $0}' gitversion.properties)
 
 
@@ -33,13 +34,13 @@ for CSPROJ_PATH in ${CSPROJ_FILES[*]}; do
 	fi
 done
 
-echo "dotnet restore $SLN_FILE -f --no-cache"
+echo "Restoring..."
 dotnet restore $SLN_FILE -f --no-cache
 
 NUPKG_PATH="$PWD/packages"
 echo $NUPKG_PATH
 
-echo "dotnet build $SLN_FILE --no-restore --configuration Release /p:DebugSymbols=false /p:DebugType=pdbonly"
+echo "Building..."
 dotnet build $SLN_FILE --no-restore --configuration Release /p:DebugSymbols=false /p:DebugType=pdbonly
 
 if [ ! -z "$TESTS_PATH" ]; then
@@ -52,20 +53,20 @@ else
 fi
 
 #TAGS=`echo $PROJECTNAME | tr '.' ' '`
-echo "dotnet pack $SLN_FILE -o $NUPKG_PATH --include-symbols --no-restore --no-build --configuration Release --verbosity normal /p:PackageProjectUrl=\"$CI_REPOSITORY_URL\" /p:PackageTags=\"$TAGS\" /p:RepositoryUrl=\"$CI_REPOSITORY_URL\" /p:IsPackable=true /p:PackageVersion=\"$GitVersion_NuGetVersionV2\" /p:Authors=\"$GITLAB_USER_NAME\" /p:Description=\"SemVer $GitVersion_SemVer GitLab CI ProjectId $CI_PROJECT_ID\" /p:Copyright=\"c Stuccomedia LTD.\""
+echo "Packing...."
 dotnet pack $SLN_FILE -o $NUPKG_PATH \ 
                         --include-symbols \
                         --no-restore \
                         --no-build \
                         --configuration Release \
                         --verbosity normal \
-#                        /p:PackageProjectUrl="$CI_REPOSITORY_URL" \
-#                        /p:PackageTags="$TAGS" \
-#                       /p:RepositoryUrl="$CI_REPOSITORY_URL" \
+                        /p:PackageProjectUrl="$STANDARD_CI_REPOSITORY_URL" \
+                        /p:RepositoryUrl="$STANDARD_CI_REPOSITORY_URL" \
                         /p:IsPackable=true \
                         /p:PackageVersion="$GitVersion_NuGetVersionV2" \
                         /p:Authors="Market Group" \
                         /p:Copyright="c Market Group LTD."
+#                        /p:PackageTags="$TAGS" \
 
 NUPKG_FILES=`ls $NUPKG_PATH | grep -v 'symbols.nupkg$'`
 for FILENAME in $NUPKG_FILES; do
