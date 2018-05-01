@@ -7,6 +7,8 @@ mono:
   - latest
 os:  
   - linux
+on:
+  tags: true
 branches:  
   only:
     - master
