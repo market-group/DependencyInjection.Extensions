@@ -12,7 +12,9 @@ os:
 branches:  
   only:
     - master
-install:  
+install: 
+  - chmod +x ./install-mono.sh
   - ./install-mono.sh
 script:  
+  - chmod +x ./ci-script.sh
   - ./ci-script.sh
