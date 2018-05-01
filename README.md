@@ -1,5 +1,7 @@
 # Market.Extensions.DependencyInjection
 
+[![Build Status](https://travis-ci.org/market-group/DependencyInjection.Extensions.svg?branch=master)](https://travis-ci.org/market-group/DependencyInjection.Extensions)
+
 A package that contains extensions on top of [Microsoft.Extensions.DependencyInjection](https://github.com/aspnet/DependencyInjection) provided by the ASP.NET Core Team
 
 ## Initialization Extensions
