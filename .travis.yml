@@ -1,7 +1,5 @@
 language: csharp  
-sudo: required  
 dist: trusty  
-sudo: false
 env:  
   - CLI_VERSION=latest
 dotnet: 2.0.0

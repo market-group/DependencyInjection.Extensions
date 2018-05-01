@@ -13,9 +13,8 @@ fi
 
 
 echo "Calculating Version...."
-mono ./GitVersion/tools/GitVersion.exe /output buildserver
-export $(awk -F= '{print $0}' gitversion.properties)
-
+GitVersion_NuGetVersionV2=$(mono ./GitVersion/tools/GitVersion.exe /showvariable NuGetVersionV2)
+echo "Calculated version $GitVersion_NuGetVersionV2"
 
 echo "Updates assembly version in the csproj file"
 PATTERN="<Version>.*</Version>"
