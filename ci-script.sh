@@ -73,5 +73,5 @@ for FILENAME in $NUPKG_FILES; do
 	mv -f $NUPKG_PATH/$FILENAME.symbols.nupkg $NUPKG_PATH/$FILENAME.nupkg
 done
 
-#echo "dotnet nuget push $NUPKG_PATH --source $NUGET_FEED --api-key ********** --no-symbols true"
-#dotnet nuget push "$NUPKG_PATH/*.nupkg" --source $NUGET_FEED --api-key $NUGET_API_KEY --no-symbols true
+echo "Pushing package..."
+dotnet nuget push "$NUPKG_PATH/*.nupkg" --source $NUGET_FEED --api-key $NUGET_API_KEY --no-symbols true
