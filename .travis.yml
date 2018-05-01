@@ -7,11 +7,10 @@ mono:
   - latest
 os:  
   - linux
-on:
-  tags: true
 branches:  
   only:
     - master
+    - /^v[0-9]+.*$/
 before-install:
   - sudo apt-get -qq update
   - sudo apt-get install -y --no-install-recommends unzip git libc6 libc6-dev libc6-dbg
