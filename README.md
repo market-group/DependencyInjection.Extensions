@@ -2,6 +2,11 @@
 
 [![Build Status](https://travis-ci.org/market-group/DependencyInjection.Extensions.svg?branch=master)](https://travis-ci.org/market-group/DependencyInjection.Extensions)
 
+|                            |                Stable                     |                 Pre-release               |
+| -------------------------: | :---------------------------------------: | :---------------------------------------: |
+|                  **Market.Extensions.DependencyInjection**  |     ![nuget-extensions-stable](https://img.shields.io/nuget/v/Market.Extensions.DependencyInjection.svg)           |    ![nuget-extensions-stable](https://img.shields.io/nuget/vpre/Market.Extensions.DependencyInjection.svg)   |
+
+
 A package that contains extensions on top of [Microsoft.Extensions.DependencyInjection](https://github.com/aspnet/DependencyInjection) provided by the ASP.NET Core Team
 
 ## Initialization Extensions
