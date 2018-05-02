@@ -13,8 +13,12 @@ fi
 
 
 echo "Calculating Version...."
+
 GitVersion_NuGetVersionV2=$(mono ./GitVersion/tools/GitVersion.exe /showvariable NuGetVersionV2)
+GitVersion_PreReleaseTag=$(mono ./GitVersion/tools/GitVersion.exe /showvariable PreReleaseTag)
+
 echo "Calculated version $GitVersion_NuGetVersionV2"
+echo "PreRelease Tag is $GitVersion_PreReleaseTag"
 
 echo "Updates assembly version in the csproj file"
 PATTERN="<Version>.*</Version>"
@@ -73,5 +77,11 @@ for FILENAME in $NUPKG_FILES; do
 	mv -f $NUPKG_PATH/$FILENAME.symbols.nupkg $NUPKG_PATH/$FILENAME.nupkg
 done
 
-echo "Pushing package..."
-dotnet nuget push "$NUPKG_PATH/*.nupkg" --source $NUGET_FEED --api-key $NUGET_API_KEY --no-symbols true
+
+
+if [ -z "$GitVersion_PreReleaseTag" ]; then
+    echo "Pushing package..."
+    dotnet nuget push "$NUPKG_PATH/*.nupkg" --source $NUGET_FEED --api-key $NUGET_API_KEY --no-symbols true
+else
+    echo "Ignoring pushing a version for an unstable package"
+fi
